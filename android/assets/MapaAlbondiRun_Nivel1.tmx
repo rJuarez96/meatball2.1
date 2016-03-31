@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="250" height="23" tilewidth="32" tileheight="32" nextobjectid="1">
  <tileset firstgid="1" name=" carretera" tilewidth="32" tileheight="32" tilecount="1" columns="1">
-  <image source="D:/descargas/meatball-master/meatball-master/Fondo/Assets/Bloque de 32x32 pix carretera.jpg" trans="ff00ff" width="32" height="32"/>
+  <image source="Fondo/Assets/Bloque de 32x32 pix carretera.jpg" trans="ff00ff" width="32" height="32"/>
  </tileset>
  <tileset firstgid="2" name="banqueta" tilewidth="32" tileheight="32" tilecount="500" columns="250">
-  <image source="D:/descargas/meatball-master/meatball-master/Fondo/Assets/banquetaNUEVA.jpg" trans="ff00ff" width="8000" height="66"/>
+  <image source="Fondo/Assets/banquetaNUEVA.jpg" trans="ff00ff" width="8000" height="66"/>
  </tileset>
  <tileset firstgid="502" name="plataformasbonitas" tilewidth="32" tileheight="32" tilecount="160" columns="20">
-  <image source="D:/descargas/meatball-master/meatball-master/Fondo/Assets/plataformasbonitas.png" trans="ff00ff" width="640" height="264"/>
+  <image source="Fondo/Assets/plataformasbonitas.png" trans="ff00ff" width="640" height="264"/>
  </tileset>
  <tileset firstgid="662" name="PescadoAnimacion" tilewidth="64" tileheight="64" tilecount="2" columns="2">
-  <image source="D:/descargas/meatball-master/meatball-master/Fondo/Items/PescadoAnimacion.png" trans="ff00ff" width="128" height="64"/>
+  <image source="Fondo/Items/PescadoAnimacion.png" trans="ff00ff" width="128" height="64"/>
   <tile id="0">
    <properties>
     <property name="Tipo" value="esqueleto"/>
@@ -22,7 +22,7 @@
   </tile>
  </tileset>
  <tileset firstgid="664" name="BolaPeloAnimacion" tilewidth="64" tileheight="64" tilecount="2" columns="2">
-  <image source="D:/descargas/meatball-master/meatball-master/Fondo/Items/BolaPeloAnimacion.png" trans="ff00ff" width="128" height="64"/>
+  <image source="Fondo/Items/BolaPeloAnimacion.png" trans="ff00ff" width="128" height="64"/>
   <tile id="0">
    <properties>
     <property name="Tipo" value="pelo"/>
@@ -34,7 +34,7 @@
   </tile>
  </tileset>
  <tileset firstgid="666" name="Trampa2" tilewidth="96" tileheight="64" tilecount="2" columns="2">
-  <image source="D:/descargas/meatball-master/meatball-master/Fondo/Items/Trampa2.png" trans="ff00ff" width="192" height="64"/>
+  <image source="Fondo/Items/Trampa2.png" trans="ff00ff" width="192" height="64"/>
   <tile id="0">
    <properties>
     <property name="Tipo" value="tramp"/>
@@ -46,16 +46,16 @@
   </tile>
  </tileset>
  <tileset firstgid="668" name="Plataforma_Larga4" tilewidth="32" tileheight="32" tilecount="96" columns="16">
-  <image source="D:/descargas/meatball-master/meatball-master/Fondo/Assets/Plataforma_Larga4.png" trans="ff00ff" width="512" height="192"/>
+  <image source="Fondo/Assets/Plataforma_Larga4.png" trans="ff00ff" width="512" height="192"/>
  </tileset>
  <tileset firstgid="764" name="Pug" tilewidth="160" tileheight="160" tilecount="1" columns="1">
-  <image source="D:/descargas/meatball-master/meatball-master/Fondo/Items/Pug.png" trans="ff00ff" width="160" height="160"/>
+  <image source="Fondo/Items/Pug.png" trans="ff00ff" width="160" height="160"/>
  </tileset>
  <tileset firstgid="765" name="Plataforma_Larga3" tilewidth="32" tileheight="32" tilecount="30" columns="10">
-  <image source="D:/descargas/meatball-master/meatball-master/Fondo/Assets/Plataforma_Larga3.png" trans="ff00ff" width="320" height="96"/>
+  <image source="Fondo/Assets/Plataforma_Larga3.png" trans="ff00ff" width="320" height="96"/>
  </tileset>
  <tileset firstgid="795" name="AlbonRayo" tilewidth="64" tileheight="64" tilecount="2" columns="2">
-  <image source="D:/descargas/meatball-master/meatball-master/Fondo/Items/Albon2.png" trans="ff00ff" width="128" height="64"/>
+  <image source="Fondo/Items/Albon2.png" trans="ff00ff" width="128" height="64"/>
   <tile id="0">
    <animation>
     <frame tileid="0" duration="600"/>
@@ -64,7 +64,7 @@
   </tile>
  </tileset>
  <tileset firstgid="797" name="AlbonDorada" tilewidth="64" tileheight="64" tilecount="2" columns="2">
-  <image source="D:/descargas/meatball-master/meatball-master/Fondo/Items/Albon3.png" trans="ff00ff" width="128" height="64"/>
+  <image source="Fondo/Items/Albon3.png" trans="ff00ff" width="128" height="64"/>
   <tile id="0">
    <properties>
     <property name="Tipo" value="puntos"/>
@@ -76,7 +76,7 @@
   </tile>
  </tileset>
  <tileset firstgid="799" name="Albon1Prueba" tilewidth="64" tileheight="64" tilecount="3" columns="3">
-  <image source="D:/descargas/meatball-master/meatball-master/Fondo/Items/Albon1Prueba.png" trans="ff00ff" width="192" height="64"/>
+  <image source="Fondo/Items/Albon1Prueba.png" trans="ff00ff" width="192" height="64"/>
   <tile id="0">
    <animation>
     <frame tileid="0" duration="100"/>
@@ -86,7 +86,7 @@
   </tile>
  </tileset>
  <imagelayer name="Fondo" opacity="0.63" offsetx="-3" offsety="-2">
-  <image source="D:/descargas/meatball-master/meatball-master/Fondo/No/FONDO ALARGADO Y FIX3.jpg"/>
+  <image source="Fondo/No/FONDO ALARGADO Y FIX3.jpg"/>
  </imagelayer>
  <layer name="Banqueta" width="250" height="23" offsetx="0" offsety="-4">
   <data encoding="csv">
