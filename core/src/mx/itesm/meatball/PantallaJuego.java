@@ -63,6 +63,8 @@ public class PantallaJuego implements Screen {
     private Sprite spritePerdio;
     private Texture texturaPausa;
     private Sprite spritePausa;
+    private Texture otra;
+    private Boton btnOtra;
 
     // Estados del juego
     private EstadosJuego estadoJuego;
@@ -114,8 +116,11 @@ public class PantallaJuego implements Screen {
         assetManager.load("botonAjustes.png", Texture.class);
         assetManager.load("mira mama sin botones.png",Texture.class);
         assetManager.load("b5.png", Texture.class);
+        assetManager.load("reg.png",Texture.class);
+
         // Se bloquea hasta que cargue todos los recursos
         assetManager.finishLoading();
+
     }
 
 
@@ -143,6 +148,8 @@ public class PantallaJuego implements Screen {
         btnSalto.setPosicion(principal.anchoMundo - 5 * TAM_CELDA, 5 * TAM_CELDA);
 
         btnSalto.setAlfa(0.7f);
+
+        btnSalto.setSize((int) btnSalto.getWidth() * 2, (int) btnSalto.getHeight() * 2);
         texturaBtnPausa=assetManager.get("botonAjustes.png");
         pausaBtn=new Boton(texturaBtnPausa);
         pausaBtn.setPosicion(camara.position.x+320, 18 * TAM_CELDA);
@@ -157,7 +164,10 @@ public class PantallaJuego implements Screen {
         texturaReanudar=assetManager.get("b5.png");
         reanudarBtn=new Boton(texturaReanudar);
         reanudarBtn.setPosicion(640,300);
-        reanudarBtn.setSize((int)(reanudarBtn.getWidth()*.5),(int)(reanudarBtn.getHeight()*.5));
+        reanudarBtn.setSize((int) (reanudarBtn.getWidth() * .5), (int) (reanudarBtn.getHeight() * .5));
+        otra=assetManager.get("reg.png");
+        btnOtra=new Boton(otra);
+        btnOtra.setPosicion(0,0);
 
 
     }
@@ -225,7 +235,8 @@ public class PantallaJuego implements Screen {
                 /*batch.setProjectionMatrix(camara.combined);*/
                 batch.begin();
 
-                spritePerdio.draw(batch);  // Dibuja el personaje
+                spritePerdio.draw(batch);
+                 btnOtra.render(batch);  // Dibuja el personaje
                // Gdx.app.log("render", "x= " + camara.position.x + " dibujando= " +spritePerdio.getX());
                 batch.end();
                 break;
@@ -442,6 +453,17 @@ public class PantallaJuego implements Screen {
         AssetManager assetManager = principal.getAssetManager();
         assetManager.unload("Albondiga.png");
         assetManager.unload("Mapa.tmx");
+        assetManager.unload("MapaAlbondiRun_Nivel1.tmx");  // Cargar info del mapa
+        assetManager.unload("PugCorrer.png");    // Cargar de albondiga
+        // Texturas de los botones
+        assetManager.unload("PugSalto.png");
+        assetManager.unload("PugCorrer.png");
+        assetManager.unload("salto.png");
+        assetManager.unload("fin.jpg");
+        assetManager.unload("botonAjustes.png");
+        assetManager.unload("mira mama sin botones.png");
+        assetManager.unload("b5.png");
+        musicaFondo.dispose();
 
     }
     private void borrarPantalla() {
@@ -487,6 +509,12 @@ Clase utilizada para manejar los eventos de touch en la pantalla
             if (estadoJuego==EstadosJuego.PAUSADO){
                 if (reanudarBtn.contiene(x,y)){
                     estadoJuego=EstadosJuego.JUGANDO;
+                }
+
+            }
+            if (estadoJuego==EstadosJuego.PERDIO){
+                if (btnOtra.contiene(x,y)){
+                    principal.setScreen(new PantallaJuego(principal));
                 }
 
             }
