@@ -1,0 +1,6 @@
+plataformer
+enemigos
+nieveles
+ladridos
+perder vidas al caer
+boses
