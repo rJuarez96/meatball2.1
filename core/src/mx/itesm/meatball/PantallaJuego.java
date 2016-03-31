@@ -65,6 +65,8 @@ public class PantallaJuego implements Screen {
     private Sprite spritePausa;
     private Texture otra;
     private Boton btnOtra;
+    private Texture textturakitty;
+    private Sprite spriteKitty;
 
     // Estados del juego
     private EstadosJuego estadoJuego;
@@ -117,12 +119,12 @@ public class PantallaJuego implements Screen {
         assetManager.load("mira mama sin botones.png",Texture.class);
         assetManager.load("b5.png", Texture.class);
         assetManager.load("reg.png",Texture.class);
+        assetManager.load("MrKitty copia.png",Texture.class);
 
         // Se bloquea hasta que cargue todos los recursos
         assetManager.finishLoading();
 
     }
-
 
 
     private void crearObjetos() {
@@ -168,6 +170,10 @@ public class PantallaJuego implements Screen {
         otra=assetManager.get("reg.png");
         btnOtra=new Boton(otra);
         btnOtra.setPosicion(0,0);
+        textturakitty=assetManager.get("MrKitty copia.png");
+        spriteKitty=new Sprite(textturakitty);
+        spriteKitty.setPosition(7400,300);
+
 
 
     }
@@ -205,12 +211,16 @@ public class PantallaJuego implements Screen {
 
             rendererMapa.setView(camara);
             rendererMapa.render();  // Dibuja el mapa
-
             // Entre begin-end dibujamos nuestros objetos en pantalla
             batch.begin();
 
-            albondiga.render(batch);    // Dibuja el personaje
+            albondiga.render(batch);
+               // Dibuja el personaje
                 //spritePerdio.draw(batch);
+                if (albondiga.getX()>=700){
+                    spriteKitty.draw(batch);
+
+                }
 
             batch.end();
 
