@@ -33,6 +33,8 @@ public class PantallaJuego implements Screen {
     private Texture texturaFondo;
     private Sprite spriteFondo;
 
+    private Texto texto;
+
     //dibujar
     private SpriteBatch batch;
 
@@ -65,8 +67,12 @@ public class PantallaJuego implements Screen {
     private Sprite spritePausa;
     private Texture otra;
     private Boton btnOtra;
+    private Texture texturaSiguiente;
+    private Boton btnSig;
     private Texture textturakitty;
     private Sprite spriteKitty;
+    private int puntaje;
+    //private  int Nivel;
 
     // Estados del juego
     private EstadosJuego estadoJuego;
@@ -81,6 +87,7 @@ public class PantallaJuego implements Screen {
     @Override
     public void show() {
         //se ejecuta uando se muestra
+        puntaje=0;
         camara = new OrthographicCamera(principal.anchoMundo, principal.altoMundo);
         camara.position.set(principal.anchoMundo / 2, principal.altoMundo / 2, 0);
         camara.update();
@@ -104,22 +111,26 @@ public class PantallaJuego implements Screen {
         musicaFondo=Gdx.audio.newMusic(Gdx.files.internal("POL-macaron-island-short.ogg"));
         musicaFondo.setLooping(true);
         musicaFondo.play();
+        texto=new Texto();
     }
     private void cargarRecursos() {
         // Cargar las texturas/mapas
         AssetManager assetManager = principal.getAssetManager();   // Referencia al assetManager
+        //assetManager.load("Mapa.tmx",TiledMap.class);
         assetManager.load("MapaAlbondiRun_Nivel1.tmx", TiledMap.class);  // Cargar info del mapa
-        assetManager.load("PugCorrer.png", Texture.class);    // Cargar de albondiga
+           // Cargar de albondiga
         // Texturas de los botones
         assetManager.load("PugSalto.png", Texture.class);
         assetManager.load("PugCorrer.png", Texture.class);
         assetManager.load("salto.png", Texture.class);
         assetManager.load("fin.jpg", Texture.class);
-        assetManager.load("botonAjustes.png", Texture.class);
+        assetManager.load("botonPausa.png", Texture.class);
         assetManager.load("mira mama sin botones.png",Texture.class);
         assetManager.load("b5.png", Texture.class);
         assetManager.load("reg.png",Texture.class);
         assetManager.load("MrKitty copia.png",Texture.class);
+        assetManager.load("botonsiguiente.png",Texture.class);
+
 
         // Se bloquea hasta que cargue todos los recursos
         assetManager.finishLoading();
@@ -130,7 +141,9 @@ public class PantallaJuego implements Screen {
     private void crearObjetos() {
         AssetManager assetManager = principal.getAssetManager();   // Referencia al assetManager
         // Carga el mapa en memoria
+
         mapa = assetManager.get("MapaAlbondiRun_Nivel1.tmx");
+
        // mapa.getLayers().get(0).setVisible(false);
        // (;
         // Crear el objeto que dibujará el mapa
@@ -140,9 +153,9 @@ public class PantallaJuego implements Screen {
         texturaPersonaje = assetManager.get("PugCorrer" +
                 ".png");
         // Crear el personaje
-        albondiga = new Personaje(texturaPersonaje,3,0);
+        albondiga = new Personaje(texturaPersonaje,3,1);
         // Posición inicial del personaje
-        albondiga.getSprite().setPosition(0,200);
+        albondiga.getSprite().setPosition(0, 200);
 
         // Crear los botones
         texturaSalto = assetManager.get("salto.png");
@@ -151,8 +164,8 @@ public class PantallaJuego implements Screen {
 
         btnSalto.setAlfa(0.7f);
 
-        btnSalto.setSize((int) btnSalto.getWidth() * 2, (int) btnSalto.getHeight() * 2);
-        texturaBtnPausa=assetManager.get("botonAjustes.png");
+        btnSalto.setSize((int) btnSalto.getWidth() / 2, (int) btnSalto.getHeight() / 2);
+        texturaBtnPausa=assetManager.get("botonPausa.png");
         pausaBtn=new Boton(texturaBtnPausa);
         pausaBtn.setPosicion(camara.position.x+320, 18 * TAM_CELDA);
         pausaBtn.setAlfa(0.7f);
@@ -172,7 +185,11 @@ public class PantallaJuego implements Screen {
         btnOtra.setPosicion(0,0);
         textturakitty=assetManager.get("MrKitty copia.png");
         spriteKitty=new Sprite(textturakitty);
-        spriteKitty.setPosition(7400,300);
+        spriteKitty.setPosition(7400, 300);
+        texturaSiguiente=assetManager.get("botonsiguiente.png");
+        btnSig=new Boton(texturaSiguiente);
+        btnSig.setPosicion(1000,100);
+
 
 
 
@@ -198,7 +215,7 @@ public class PantallaJuego implements Screen {
         if (albondiga.getX()>=8000){estadoJuego=EstadosJuego.GANO;}
         //leerEntrada();
 
-        //Gdx.app.log("render","estado= "+estadoJuego);
+        //Gdx.app.log("render","estado= "+Nivel);
         switch (estadoJuego) {
             case JUGANDO:
             moverPersonaje();
@@ -230,7 +247,8 @@ public class PantallaJuego implements Screen {
 
             btnSalto.render(batch);
                 pausaBtn.render(batch);
-                pausaBtn.setPosicion(camaraHUD.position.x+400,600);
+                pausaBtn.setPosicion(camaraHUD.position.x + 400, 600);
+                texto.mostrarMensaje("Puntaje"+puntaje, Principal.altoMundo / 2+200, Principal.altoMundo * 0.95f, batch);
 
             batch.end();
                 break;
@@ -239,16 +257,12 @@ public class PantallaJuego implements Screen {
 
 
                 borrarPantalla();
+                principal.setScreen(new pantallaMenu(principal));
 
                 //camara.position.set(0,0, 0);
 
                 /*batch.setProjectionMatrix(camara.combined);*/
-                batch.begin();
 
-                spritePerdio.draw(batch);
-                 btnOtra.render(batch);  // Dibuja el personaje
-               // Gdx.app.log("render", "x= " + camara.position.x + " dibujando= " +spritePerdio.getX());
-                batch.end();
                 break;
 
             case PAUSADO:
@@ -278,14 +292,14 @@ public class PantallaJuego implements Screen {
                 /*batch.setProjectionMatrix(camara.combined);*/
                 batch.begin();
 
-                spritePerdio.draw(batch);  // Dibuja el personaje
-                // Gdx.app.log("render", "x= " + camara.position.x + " dibujando= " +spritePerdio.getX());
+                spritePerdio.draw(batch);
+                btnSig.render(batch);
+                //Nivel++;
+                //principal.setScreen(new PantallaJuego(principal));
                 batch.end();
                 break;
-        }
-    }
 
-    private void leerEntradaPausa() {
+        }
         if (Gdx.input.justTouched()==true) {
             Vector3 coordenadas = new Vector3();
             coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -336,6 +350,7 @@ public class PantallaJuego implements Screen {
                         if (capaMala.getCell(celdaX+i, celdaY+j)!=null){
                             capaMala.setCell(celdaX+i, celdaY+j, null);
                             albondiga.perderVida();
+                            puntaje-=100;
                         }
                     }
                 }
@@ -376,6 +391,7 @@ public class PantallaJuego implements Screen {
                     if (capaMala.getCell(celdaX+i, celdaY+j)!=null){
                         capaMala.setCell(celdaX+i, celdaY+j, null);
                         albondiga.perderVida();
+                        puntaje-=100;
                     }
                 }
             }
@@ -387,6 +403,7 @@ public class PantallaJuego implements Screen {
                     if (capaBuena.getCell(celdaX+i, celdaY+j)!=null){
                         capaBuena.setCell(celdaX+i, celdaY+j, null);
                         albondiga.ganarVida();
+                        puntaje+=100;
                     }
                 }
             }
@@ -494,12 +511,7 @@ Clase utilizada para manejar los eventos de touch en la pantalla
         private Vector3 coordenadas = new Vector3();
         private float x, y;     // Las coordenadas en la pantalla
 
-        /*
-        Se ejecuta cuando el usuario PONE un dedo sobre la pantalla, los dos primeros parámetros
-        son las coordenadas relativas a la pantalla física (0,0) en la esquina superior izquierda
-        pointer - es el número de dedo que se pone en la pantalla, el primero es 0
-        button - el botón del mouse
-         */
+
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
             transformarCoordenadas(screenX, screenY);
@@ -525,6 +537,12 @@ Clase utilizada para manejar los eventos de touch en la pantalla
             if (estadoJuego==EstadosJuego.PERDIO){
                 if (btnOtra.contiene(x,y)){
                     principal.setScreen(new PantallaJuego(principal));
+                }
+
+            }
+            if (estadoJuego==EstadosJuego.GANO){
+                if (btnSig.contiene(x,y)){
+                    principal.setScreen(new PantallaJuego2(principal));
                 }
 
             }

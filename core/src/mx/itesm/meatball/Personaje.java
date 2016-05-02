@@ -11,8 +11,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  * Created by Roberto on 03/03/2016.
  */
 public class Personaje {
-    public static final float VELOCIDAD_Y = -5f;   // Velocidad de caída
-    private static final float VELOCIDAD_X = 5;     // Velocidad horizontal
+    public static final float VELOCIDAD_Y = -10f;   // Velocidad de caída
+    private static  float VELOCIDAD_X = 5;     // Velocidad horizontal
 
     private Sprite sprite;  // Sprite cuando no se mueve
     private Texture texturaAlbondiga;
@@ -26,29 +26,31 @@ public class Personaje {
     private EstadoSalto estadoSalto;
 
     // SALTO del personaje
-    private static final float V0 = 50;     // Velocidad inicial del salto
+    private static final float V0 = 70;     // Velocidad inicial del salto
     private static final float G = 9.81f;
     private static final float G_2 = G/2;   // Gravedad
     private float yInicial;         // 'y' donde inicia el salto
     private float tiempoVuelo;       // Tiempo que estará en el aire
     private float tiempoSalto;      // Tiempo actual de vuelo
-    private int tipo;
+    private int nivel;
     private int vidas;
+    private int ataquesDispo;
     /*
     Constructor del personaje, recibe una imagen con varios frames, (ver imagen marioSprite.png)
      */
-    public Personaje(Texture textura, int vidas,int tipo) {
+    public Personaje(Texture textura, int vidas,int nivel) {
         // Lee la textura como región
         TextureRegion texturaCompleta = new TextureRegion(textura);
+
         // La divide en frames de 16x32 (ver marioSprite.png)
-        TextureRegion[][] texturaPersonaje = texturaCompleta.split(133,97);
+        TextureRegion[][] texturaPersonaje = texturaCompleta.split(160, 160);
         // Crea la animación con tiempo de 0.25 segundos entre frames.
         animacion = new Animation(0.25f,
-                texturaPersonaje[0][5],
-                texturaPersonaje[0][4],
-                texturaPersonaje[0][3],
+                texturaPersonaje[0][1],
                 texturaPersonaje[0][2],
-                texturaPersonaje[0][1]);
+                texturaPersonaje[0][3],
+                texturaPersonaje[0][4],
+                texturaPersonaje[0][5]);
         // Animación infinita
         animacion.setPlayMode(Animation.PlayMode.LOOP);
         // Inicia el timer que contará tiempo para saber qué frame se dibuja
@@ -57,9 +59,9 @@ public class Personaje {
         sprite = new Sprite(texturaPersonaje[0][0]);    // quieto
         estadoMovimiento = EstadoMovimiento.INICIANDO;
         estadoSalto = EstadoSalto.EN_PISO;
-        this.tipo=tipo;
+        this.nivel=nivel;
         this.vidas=vidas;
-
+        ataquesDispo=0;
     }
 
     // Dibuja el personaje
@@ -73,27 +75,52 @@ public class Personaje {
         spriteAlbondiga=new Sprite(texturaAlbondiga);
 
         //spriteAlbondiga.setSize(5, 5);
+       // Gdx.app.log("render","x="+VELOCIDAD_X);
 
       // Gdx.app.log("render","x="+getX()+" vidas = "+vidas);
         int vel=0;
-        if(tipo==0){
+        if(nivel==1){
             for (int i=0;i<vidas;i++){
                 int espacio=i*134;
                 //if ((int)getX()==2000 ){vidas-=1; break;}
                 vel+=VELOCIDAD_X;
-                //Gdx.app.log("render","x="+vel);
+
                 if((int)getX()<320){
                     batch.draw(spriteAlbondiga,vel+espacio,600);
 
                 }
                 else if((int)getX()>7020){
                     batch.draw(spriteAlbondiga,6720+espacio,600);
+
                 }
 
                 else{
-            batch.draw(spriteAlbondiga,sprite.getX()-320+espacio,600);}
+                    batch.draw(spriteAlbondiga,sprite.getX()-320+espacio,600);}
 
             }
+
+
+        }
+        if(nivel==0) {
+            for (int i = 0; i < vidas; i++) {
+                int espacio = i * 134;
+                //if ((int)getX()==2000 ){vidas-=1; break;}
+
+                //Gdx.app.log("render","x="+vel);
+
+                batch.draw(spriteAlbondiga, +espacio, 600);
+
+
+            }
+        }
+        for (int i=0;i<ataquesDispo;i++){
+            int espacio=i*134;
+            //if ((int)getX()==2000 ){vidas-=1; break;}
+
+            //Gdx.app.log("render","x="+vel);
+
+            batch.draw(spriteAlbondiga,+espacio,460);
+
 
 
         }
@@ -151,9 +178,7 @@ public class Personaje {
     public void setPosicion(float x, int y) {
         sprite.setPosition(x,y);
     }
-    public int getTipo(){
-        return this.tipo;
-    }
+
     public int getVidas(){
         return this.vidas;
     }
@@ -209,5 +234,26 @@ public class Personaje {
         }else{
          vidas+=1;
         }
+    }
+    public void invertirX(){
+        VELOCIDAD_X=VELOCIDAD_X*-1;
+       // Gdx.app.log("render","x="+VELOCIDAD_X);
+    }
+    public void incAt(){
+
+        ataquesDispo=ataquesDispo+1;
+    }
+    public void decAt(){
+
+        ataquesDispo=ataquesDispo-1;
+    }
+    public int getAtDis(){
+        return ataquesDispo;
+    }
+    public void cambiarVelIzq(){
+      VELOCIDAD_X=-10;
+    }
+    public void cambiarVelDer(){
+        VELOCIDAD_X=10;
     }
 }

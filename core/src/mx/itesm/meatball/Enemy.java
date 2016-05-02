@@ -6,13 +6,15 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
 
 /**
  * Created by Roberto on 31/03/2016.
  */
 public class Enemy {
     public static final float VELOCIDAD_Y = -5f;   // Velocidad de caída
-    private static final float VELOCIDAD_X = 5;     // Velocidad horizontal
+    private static float VELOCIDAD_X = 5;     // Velocidad horizontal
+    private Array<Ataque> ataques;
 
     private Sprite sprite;  // Sprite cuando no se mueve
     private Texture texturaAlbondiga;
@@ -26,7 +28,7 @@ public class Enemy {
     private EstadoSalto estadoSalto;
 
     // SALTO del personaje
-    private static final float V0 = 50;     // Velocidad inicial del salto
+    private static final float V0 = 70;     // Velocidad inicial del salto
     private static final float G = 9.81f;
     private static final float G_2 = G/2;   // Gravedad
     private float yInicial;         // 'y' donde inicia el salto
@@ -34,16 +36,25 @@ public class Enemy {
     private float tiempoSalto;      // Tiempo actual de vuelo
     private int tipo;
     private int vidas;
+    private Texture ata;
+
     /*
     Constructor del personaje, recibe una imagen con varios frames, (ver imagen marioSprite.png)
      */
-    public Enemy(Texture textura, int vidas, int tipo) {
+    public Enemy(Texture textura, int vidas) {
+        //ata= new Texture(Gdx.files.internal("monedas.png"));
         // Lee la textura como región
         TextureRegion texturaCompleta = new TextureRegion(textura);
         // La divide en frames de 16x32 (ver marioSprite.png)
         TextureRegion[][] texturaPersonaje = texturaCompleta.split(650,300);
         // Crea la animación con tiempo de 0.25 segundos entre frames.
         animacion = new Animation(0.25f,
+                texturaPersonaje[0][11],
+                texturaPersonaje[0][10],
+                texturaPersonaje[0][9],
+                texturaPersonaje[0][8],
+                texturaPersonaje[0][7],
+                texturaPersonaje[0][6],
                 texturaPersonaje[0][5],
                 texturaPersonaje[0][4],
                 texturaPersonaje[0][3],
@@ -64,6 +75,8 @@ public class Enemy {
 
     // Dibuja el personaje
     public void render (SpriteBatch batch) {
+        texturaAlbondiga= new Texture(Gdx.files.internal("vida Kit.png"));
+        spriteAlbondiga=new Sprite(texturaAlbondiga);
         // Dibuja el personaje dependiendo del estadoMovimiento
         timerAnimacion += Gdx.graphics.getDeltaTime();
         // Obtiene el frame que se debe mostrar (de acuerdo al timer)
@@ -75,7 +88,17 @@ public class Enemy {
 
         // Gdx.app.log("render","x="+getX()+" vidas = "+vidas);
 
+        for (int i=0;i<vidas;i++){
+            int espacio=i*134;
+            //if ((int)getX()==2000 ){vidas-=1; break;}
 
+            //Gdx.app.log("render","x="+vel);
+
+            batch.draw(spriteAlbondiga,500+espacio,600);
+
+
+
+        }
 
     }
 
@@ -187,6 +210,15 @@ public class Enemy {
         }else{
             vidas+=1;
         }
+    }
+    public void invertirX(){
+        VELOCIDAD_X=VELOCIDAD_X*-1;
+    }
+    public Array<Ataque> atacar(){
+
+
+        return ataques;
+
     }
 }
 

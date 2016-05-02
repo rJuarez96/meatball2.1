@@ -1,13 +1,8 @@
 package mx.itesm.meatball;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 
@@ -23,7 +18,7 @@ public class Principal extends Game {
 		assetManager.setLoader(TiledMap.class,
 				new TmxMapLoader(new InternalFileHandleResolver()));
 		// Pantalla inicial
-		setScreen(new pantallaMenu(this));
+		setScreen(new pantallaTec(this));
 	}
 
 	// Método accesor de assetManager

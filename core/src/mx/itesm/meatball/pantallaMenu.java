@@ -64,22 +64,22 @@ public class pantallaMenu implements Screen {
         texturaFondo=new Texture(Gdx.files.internal("Pantalla_menu.png"));
         spriteFondo=new Sprite(texturaFondo);
 
-        texturaPlay= new Texture(Gdx.files.internal("botones.png"));
+        texturaPlay= new Texture(Gdx.files.internal("botonJugar.png"));
         spriteTexturaPlay= new Sprite(texturaPlay);
-        spriteTexturaPlay.setPosition(70, 485);
-        spriteTexturaPlay.setSize(450, 190);
-        texturaAcercade= new Texture(Gdx.files.internal("acerca de.png"));
+        spriteTexturaPlay.setPosition(110, 270);
+        //spriteTexturaPlay.setSize(450, 190);
+        texturaAcercade= new Texture(Gdx.files.internal("botonAcerca.png"));
         spriteAcercaDe= new Sprite(texturaAcercade);
-        spriteAcercaDe.setPosition(105,285);
-        spriteAcercaDe.setSize(400, 100);
-        texturaBtnSalir=new Texture(Gdx.files.internal("salir.png"));
+        spriteAcercaDe.setPosition(110,200);
+        //spriteAcercaDe.setSize(400, 100);
+        texturaBtnSalir=new Texture(Gdx.files.internal("botonSalir.png"));
         spriteBtnSalir=new Sprite(texturaBtnSalir);
-        spriteBtnSalir.setPosition(85,130);
-        spriteBtnSalir.setSize(400, 100);
-        textureBtnIns=new Texture(Gdx.files.internal("inst.png"));
+        spriteBtnSalir.setPosition(110,130);
+        //spriteBtnSalir.setSize(400, 100);
+        textureBtnIns=new Texture(Gdx.files.internal("botonInst.png"));
         spriteBtnIns=new Sprite(textureBtnIns);
-        spriteBtnIns.setPosition(75, 400);
-        spriteBtnIns.setSize(400,90);
+        spriteBtnIns.setPosition(170, 600);
+        //spriteBtnIns.setSize(400,90);
         //spriteTexturaPlay.setPosition(Principal.anchoMundo / 2 - spriteBtnSalir.getWidth() / 2, Principal.altoMundo / 4);
 
     }
@@ -163,5 +163,7 @@ public class pantallaMenu implements Screen {
         texturaPlay.dispose();
         musicaFondo.dispose();
 
+
     }
+
 }

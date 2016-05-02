@@ -60,7 +60,10 @@ public class PantallaAcercaDe implements Screen {
         spriteFondo.draw(batch);
 
         spriteBtnSalir.draw(batch);
+
+
         batch.end();
+
     }
 
     private void leerEntrada() {
@@ -71,7 +74,9 @@ public class PantallaAcercaDe implements Screen {
             float touchX=coordenadas.x;
             float touchY=coordenadas.y;
             if (touchX>=spriteBtnSalir.getX() && touchX<=spriteBtnSalir.getX()+spriteBtnSalir.getWidth() && touchY>=spriteBtnSalir.getY() && touchY<=spriteBtnSalir.getY()+spriteBtnSalir.getHeight()){
+                borrarPantalla();
                 principal.setScreen(new pantallaMenu(principal));
+
             }
 
         }
@@ -96,9 +101,14 @@ public class PantallaAcercaDe implements Screen {
     public void hide() {
 
     }
+    private void borrarPantalla() {
+        Gdx.gl.glClearColor(0.42f, 0.55f, 1, 1);    // r, g, b, alpha
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    }
 
     @Override
     public void dispose() {
     texturaFondo.dispose();
+        texturaBtnSalir.dispose();
     }
 }
